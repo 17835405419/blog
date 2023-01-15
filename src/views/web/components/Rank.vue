@@ -2,15 +2,15 @@
   <el-card class="card-box">
     <div slot="header" class="header-box">
       <span>|</span>
-      <span>阅读排行</span>
+      <span>{{ title }}</span>
     </div>
     <div class="content-box">
-      <div class="text-item" v-for="(item, index) in articleList" :key="index">
+      <div class="text-item" v-for="(item, index) in rankLists" :key="index">
         <div class="text-content">
-          <p @click="childMethod(item.id)">
+          <p @click="goToArticleInfo(item.articleId)">
             {{ item.title }}
           </p>
-          <p>阅读：{{ item.read }}</p>
+          <p>阅读：{{ item.articleHandle.read }}</p>
         </div>
       </div>
     </div>
@@ -19,17 +19,39 @@
 
 <script>
 export default {
+  props: {
+    title: {
+      type: String,
+      required: true,
+    },
+
+    rankLists: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
-    return {
-      articleList: [{ title: "nihao" }, { title: "dajiahgao" }],
-    };
+    return {};
+  },
+  methods: {
+    goToArticleInfo(articleId) {
+      // 将点击的id回传给父组件
+      this.$emit("toInfoQuery", articleId);
+
+      this.$router.push({
+        path: "/articleInfo",
+        query: {
+          articleId,
+        },
+      });
+    },
   },
 };
 </script>
 
 <style lang='less' scoped>
 .card-box {
-  height: 300px;
+  height: 100%;
 }
 /deep/.el-card__header {
   padding: 13px;

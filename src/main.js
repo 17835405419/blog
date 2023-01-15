@@ -16,6 +16,21 @@ Vue.filter("FormatTime", function (value) {
   return dayjs(value).format("YYYY-MM-DD");
 });
 
+// 引入代码高亮插件
+//导入代码高亮文件
+import hljs from "highlight.js";
+//导入代码高亮样式
+import "highlight.js/styles/monokai-sublime.css";
+//定义一个代码高亮指令
+Vue.directive("highlight", function (el) {
+  let highlight = el.querySelectorAll("pre code");
+  highlight.forEach((block) => {
+    hljs.highlightElement(block);
+  });
+});
+// 初始化
+Vue.prototype.$hljs = hljs;
+
 new Vue({
   router,
   store,

@@ -39,7 +39,9 @@
               文章管理</template
             >
             <el-menu-item index="/admin/article/release">发布文章</el-menu-item>
-            <el-menu-item index="/admin/article">文章列表</el-menu-item>
+            <el-menu-item index="/admin/article/articleList"
+              >文章列表</el-menu-item
+            >
           </el-submenu>
           <el-menu-item index="/admin/comment">
             <span slot="title">
@@ -88,8 +90,8 @@ export default {
             type: "success",
             message: "退出成功!",
           });
-          this.$store.commit("setUserToken", null);
-          this.$store.commit("setUserInfo", null);
+          this.$store.commit("setUserToken", "");
+          this.$store.commit("setUserInfo", "");
           this.$router.push("/login");
         })
         .catch(() => {

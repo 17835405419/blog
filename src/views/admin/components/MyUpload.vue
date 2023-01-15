@@ -81,6 +81,7 @@ export default {
     handleSuccess(res, file) {
       if (res.code === 0) {
         // 子组件发送事件 将图片地址传递给父组件
+
         this.$emit("transmitImgUrl", res.imgUrl);
       }
     },

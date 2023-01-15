@@ -3,13 +3,18 @@
     <span>博主简介</span>
     <div class="content-box">
       <div class="avaterUrl-box">
-        <el-avatar :size="size" :src="userInfo.avater"></el-avatar>
-        <span>{{ userInfo.nickName }}</span>
-        <span class="fans-num"> 粉丝数：{{ userInfo.fansNum }}</span>
+        <el-avatar
+          :size="size"
+          :src="userInfo ? userInfo.avater : defaultAvater"
+        ></el-avatar>
+        <span>{{ userInfo ? userInfo.nickName : "游客" }}</span>
+        <span class="fans-num">
+          粉丝数：{{ userInfo ? userInfo.fansNum : 0 }}</span
+        >
       </div>
       <div class="userdecx-box">
         <span>
-          {{ userInfo.desc }}
+          {{ userInfo ? userInfo.desc : "暂无简介" }}
         </span>
       </div>
     </div>
@@ -19,15 +24,11 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  props: {
-    avaterUrl: {
-      type: String,
-      default: "",
-    },
-  },
   data() {
     return {
       size: 30,
+      defaultAvater:
+        "http://rnla1fx0j.hn-bkt.clouddn.com/rootAdmin/defaultAvater.png",
     };
   },
   computed: {

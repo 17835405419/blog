@@ -156,6 +156,7 @@ export default Vue.extend({
       // 发表文章内容
       articleForm: {
         authorId: this.$store.state.userInfo.userId,
+        authorName: this.$store.state.userInfo.nickName,
         title: "", //文章标题
         articleImg: "", //封面图片
         content: "", //文章内容
@@ -251,6 +252,7 @@ export default Vue.extend({
           // 清空文章数据
           this.articleForm = {
             authorId: this.$store.state.userInfo.userId,
+            authorName: this.$store.state.userInfo.nickName,
             title: "", //文章标题
             articleImg: "", //封面图片
             content: "", //文章内容

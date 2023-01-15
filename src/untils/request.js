@@ -1,5 +1,6 @@
 import axios from "axios";
 import store from "@/store/";
+import { Message } from "element-ui"; //导入弹窗
 
 let instance = axios.create({
   baseURL: "http://localhost:3000/api",
@@ -20,6 +21,34 @@ instance.interceptors.request.use(
   (err) => {
     // 对请求错误做些什么
     console.log("请求失败", err);
+  }
+);
+
+// 添加响应拦截器
+instance.interceptors.response.use(
+  async (res) => {
+    const { data } = res;
+    if (data.code === 1004) {
+      store.commit("setUserInfo", "");
+      store.commit("setUserToken", "");
+      Message({
+        message: "您的登录已过期",
+        type: "warning",
+      });
+    } else if (data.code === 1002) {
+      Message({
+        message: "请您先登录",
+        type: "warning",
+        duration: 1000,
+      });
+    }
+
+    return res;
+  },
+  (err) => {
+    // 对响应错误做点什么
+    console.log(err.message);
+    return Promise.reject(err);
   }
 );
 

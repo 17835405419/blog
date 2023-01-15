@@ -6,7 +6,7 @@
       </div>
 
       <div class="text-box">
-        <span class="title" @click="goToArticleInfo">{{
+        <span class="title" @click="goToArticleInfo(articleInfo.articleId)">{{
           articleInfo.title
         }}</span>
         <div class="content">
@@ -16,7 +16,9 @@
           <span class="el-icon-date"
             >&nbsp&nbsp{{ articleInfo.createTime | FormatTime }}</span
           >
-          <span class="el-icon-chat-dot-square">&nbsp&nbsp1230</span>
+          <span class="el-icon-chat-dot-square"
+            >&nbsp&nbsp{{ articleInfo.articleHandle.comment }}</span
+          >
           <span class="el-icon-thumb"
             >&nbsp&nbsp{{ articleInfo.articleHandle.star }}</span
           >
@@ -54,8 +56,13 @@ export default {
     return {};
   },
   methods: {
-    goToArticleInfo() {
-      this.$router.push("/articleInfo/1");
+    goToArticleInfo(articleId) {
+      this.$router.push({
+        path: "/articleInfo",
+        query: {
+          articleId,
+        },
+      });
     },
   },
 };

@@ -1,7 +1,7 @@
 <template>
   <div class="header-box">
     <div class="logo-box">
-      <img src="@/assets/logo.png" alt="" />
+      <img src="@/assets/favicon.png" alt="" />
       <span>文霄博客站</span>
     </div>
 

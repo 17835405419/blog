@@ -1,6 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
+// 重写 push方法防止路由重复跳转报错
+const VueRouterPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(to) {
+  return VueRouterPush.call(this, to).catch((err) => err);
+};
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -12,7 +18,7 @@ const routes = [
   },
 
   {
-    path: "/articleInfo/:id",
+    path: "/articleInfo",
     name: "articleInfo",
     component: () => import("@/views/web/article/articleInfo.vue"),
   },
@@ -53,6 +59,14 @@ const routes = [
           title: "发布文章",
         },
       },
+      {
+        path: "/admin/article/articleList",
+        name: "articleList",
+        component: () => import("@/views/admin/article/articleList.vue"),
+        meta: {
+          title: "文章列表",
+        },
+      },
     ],
   },
 ];
@@ -61,6 +75,14 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+  window.pageYOffset = 0;
+
+  next();
 });
 
 export default router;

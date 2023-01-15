@@ -90,7 +90,9 @@ export default {
   data() {
     return {
       isDisable: true, //是否显示表单禁用
-      userForm: {}, //用户信息
+      userForm: {
+        avater: "",
+      }, //用户信息
       action: "http://127.0.0.1:3000/api/upload/avater", //头像上传地址
       headers: {
         Authorization: `Bearer ${this.$store.state.token}`,

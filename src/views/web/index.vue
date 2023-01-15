@@ -31,7 +31,11 @@
           <!-- 博主介绍 -->
           <Introduction />
           <!-- 阅读排行 -->
-          <Rank :style="{ marginTop: '20px' }" />
+          <Rank
+            :style="{ marginTop: '20px' }"
+            title="阅读排行"
+            :rankLists="rankLists"
+          />
         </el-col>
       </el-row>
     </el-main>
@@ -66,6 +70,7 @@ export default {
     return {
       articleList: [],
       bannerLists: [], //轮播图数据
+      rankLists: [],
       pageSize: 6, //每一页显示的数量
       total: null, //总条目数
     };
@@ -73,6 +78,7 @@ export default {
   created() {
     this.getArticleList();
     this.getBannerList();
+    this.getRankList();
   },
   methods: {
     // 获取轮播图数据
@@ -93,9 +99,23 @@ export default {
         this.total = data.data.count;
       }
     },
+
+    // 获取排行榜数据
+    async getRankList() {
+      const { data } = await article_getArticle({
+        sortQuery: "articleHandle.read",
+        sortStyle: 0, //排序方式 降序排序
+        pageSize: 6,
+      });
+      if (data.code === 0) {
+        this.rankLists = data.data.ArticleInfo;
+      }
+    },
     // 点击分页
     async changePage(page) {
       await this.getArticleList(page);
+      // 翻页之后自动到顶部
+      document.documentElement.scrollTop = 0;
     },
   },
 };
@@ -105,6 +125,13 @@ export default {
 .el-header,
 .el-footer {
   padding: 0;
+}
+.el-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
 }
 .el-main {
   margin: 0 80px;

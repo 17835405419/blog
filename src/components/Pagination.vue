@@ -3,7 +3,6 @@
     background
     layout="prev, pager, next"
     :total="total"
-    :pageSize="pageSize"
     :page-size="pageSize"
     :current-page="1"
     @current-change="changePage"
@@ -20,7 +19,7 @@ export default {
     }, //总条数
     pageSize: {
       type: Number,
-      default: null,
+      default: 10,
     }, //每一页默认显示的条数
   },
   data() {
