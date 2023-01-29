@@ -15,19 +15,62 @@ const routes = [
     path: "/",
     name: "webIndex",
     component: () => import("@/views/web/index.vue"),
+    meta: {
+      title: "首页",
+    },
   },
 
   {
     path: "/articleInfo",
     name: "articleInfo",
     component: () => import("@/views/web/article/articleInfo.vue"),
+    meta: {
+      title: "文章详情",
+    },
   },
+  {
+    path: "/technology",
+    name: "technology",
+    component: () => import("@/views/web/selctionPage.vue"),
+    meta: {
+      title: "技术博客",
+    },
+  }, // 导航 ---技术博客
+  {
+    path: "/lifeLog",
+    name: "lifeLog",
+    component: () => import("@/views/web/selctionPage.vue"),
+    meta: {
+      title: "生活日志",
+    },
+  }, // 导航 ---生活日志
+  {
+    path: "/tag",
+    name: "tag",
+    component: () => import("@/views/web/selctionPage.vue"),
+    meta: {
+      title: "Tags",
+    },
+  }, // 点击tag 查询文章
+  {
+    path: "/about",
+    name: "about",
+    component: () => import("@/views/web/about.vue"),
+    meta: {
+      title: "about",
+    },
+  }, // 关于我
 
   // 后台作者端
   {
     path: "/login",
     name: "login",
     component: () => import("@/views/admin/login/login.vue"),
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: () => import("@/views/admin/login/register.vue"),
   },
   {
     redirect: "/admin/user/personal",
@@ -52,6 +95,14 @@ const routes = [
         },
       },
       {
+        path: "/admin/user/fansList",
+        name: "fansList",
+        component: () => import("@/views/admin/user/fansList.vue"),
+        meta: {
+          title: "粉丝列表",
+        },
+      },
+      {
         path: "/admin/article/release",
         name: "release",
         component: () => import("@/views/admin/article/release.vue"),
@@ -60,11 +111,43 @@ const routes = [
         },
       },
       {
+        path: "/admin/article/update",
+        name: "update",
+        component: () => import("@/views/admin/article/release.vue"),
+        meta: {
+          title: "更新文章",
+        },
+      },
+      {
         path: "/admin/article/articleList",
         name: "articleList",
         component: () => import("@/views/admin/article/articleList.vue"),
         meta: {
           title: "文章列表",
+        },
+      },
+      {
+        path: "/admin/article/star",
+        name: "articleStar",
+        component: () => import("@/views/admin/article/articleStar.vue"),
+        meta: {
+          title: "文章点赞",
+        },
+      },
+      {
+        path: "/admin/article/comment",
+        name: "articleComment",
+        component: () => import("@/views/admin/article/articleComment.vue"),
+        meta: {
+          title: "文章评论",
+        },
+      },
+      {
+        path: "/admin/article/collection",
+        name: "articleCollection",
+        component: () => import("@/views/admin/article/articleCollection.vue"),
+        meta: {
+          title: "文章收藏",
         },
       },
     ],
@@ -81,7 +164,6 @@ router.beforeEach((to, from, next) => {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
   window.pageYOffset = 0;
-
   next();
 });
 

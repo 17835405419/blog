@@ -5,6 +5,7 @@
 </template>
 
 <style lang="less">
+@import url("./assets//icon/iconfont.css");
 html,
 body {
   margin: 0;

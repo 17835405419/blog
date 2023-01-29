@@ -18,6 +18,7 @@
           ref="myUpload"
           name="articleCover"
           :isShowFileList="isShowFileList"
+          :defultPictureCard="articleForm.articleImg"
           listType="picture-card"
           @transmitImgUrl="getChildUrl"
           @deleteImgUrl="articleForm.articleImg = ''"
@@ -104,10 +105,12 @@
 import Vue from "vue";
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 import Upload from "../components/MyUpload.vue";
+
 import {
   article_getArticleTag,
   article_deleteArticleImg,
   article_createArticle,
+  article_updateArticle,
 } from "@/api/article_api.js";
 export default Vue.extend({
   components: { Editor, Toolbar, Upload },
@@ -165,7 +168,7 @@ export default Vue.extend({
         showTagList: [],
         stemfrom: "", //文章来源
       },
-
+      articleId: null, //文章ID 用于更新文章
       isShowFileList: true, //是否显示头像上传照片墙
       drawer: false, //是否打开标签抽屉组件
       tagList: [], // 标签列表
@@ -185,8 +188,35 @@ export default Vue.extend({
   },
   created() {
     this.getArtcileTag();
+    // 判断是否上个页面 是否传递过来数据 如果传递过来则将其显示
+    // 注意 使用Json.parse解析一下防止刷新数据丢失
+    this.$route.name === "update"
+      ? ((this.articleForm = JSON.parse(this.$route.query.articleInfo)),
+        (this.articleId = JSON.parse(this.$route.query.articleInfo).articleId))
+      : "";
   },
-
+  watch: {
+    // 由于不同路由 使用同一个组件 不会重复渲染 及触发create等钩子函数 所以需要进行监听
+    // 该功能为从更新界面 跳转至发布界面的处理
+    $route: {
+      handler(newval, oldval) {
+        if (newval.name === "release") {
+          // 清空文章数据
+          this.articleForm = {
+            authorId: this.$store.state.userInfo.userId,
+            authorName: this.$store.state.userInfo.nickName,
+            title: "", //文章标题
+            articleImg: "", //封面图片
+            content: "", //文章内容
+            articlPartName: "选择分区", //分区
+            //显示的标签列表
+            showTagList: [],
+            stemfrom: "", //文章来源
+          };
+        }
+      },
+    },
+  },
   methods: {
     onCreated(editor) {
       this.editor = Object.seal(editor); // 一定要用 Object.seal() ，否则会报错
@@ -240,15 +270,21 @@ export default Vue.extend({
           .map((item) => item.src);
         this.allUploadImgList.forEach(async (e) => {
           if (!newImgList.includes(e)) {
+            // 删除图片
             await article_deleteArticleImg({ imgUrl: e });
           }
         });
-        // 调用接口发布文章
-        const { data } = await article_createArticle({
-          articleInfo: this.articleForm,
-        });
+        // 判断是更新还是发布 来调用对应接口
+        const { data } = !this.$route.query.articleInfo
+          ? await article_createArticle(this.articleForm)
+          : await article_updateArticle(
+              Object.assign(this.articleForm, {
+                articleId: this.articleId,
+              })
+            );
+
         if (data.code === 0) {
-          this.$message.success("发布文章成功");
+          this.$message.success(data.msg);
           // 清空文章数据
           this.articleForm = {
             authorId: this.$store.state.userInfo.userId,

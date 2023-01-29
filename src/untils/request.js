@@ -28,12 +28,14 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   async (res) => {
     const { data } = res;
+
     if (data.code === 1004) {
       store.commit("setUserInfo", "");
       store.commit("setUserToken", "");
       Message({
         message: "您的登录已过期",
         type: "warning",
+        duration: 1000,
       });
     } else if (data.code === 1002) {
       Message({

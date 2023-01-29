@@ -40,7 +40,8 @@ export default {
 <style lang="less" scoped>
 .decx-box {
   background-color: #fff;
-  box-shadow: 0 0 5px 0.2px #fff;
+  box-shadow: 0 0 5px 0.2px rgb(212, 210, 210);
+  border-radius: 3px;
   padding: 10px;
   height: 180px;
   span {

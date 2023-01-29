@@ -36,6 +36,12 @@
             title="阅读排行"
             :rankLists="rankLists"
           />
+          <!-- 标签云 -->
+          <TagBox
+            :style="{ marginTop: '20px' }"
+            :tagLists="tagLists"
+            @tagName="getTagName"
+          />
         </el-col>
       </el-row>
     </el-main>
@@ -51,10 +57,14 @@ import Header from "./components/Header.vue";
 import Swiper from "@/components/Swiper.vue";
 import Introduction from "./components/Introduction.vue";
 import Rank from "./components/Rank.vue";
+import TagBox from "./components/TagBox.vue";
 import ArticleList from "./components/ArticleList.vue";
 import Pagination from "@/components/Pagination.vue";
 import Footer from "./components/Footer.vue";
-import { article_getArticle } from "@/api/article_api.js";
+import {
+  article_getArticle,
+  article_getArticleTag,
+} from "@/api/article_api.js";
 import { banner_getBanner } from "@/api/banner_api.js";
 export default {
   components: {
@@ -62,6 +72,7 @@ export default {
     Swiper,
     Introduction,
     Rank,
+    TagBox,
     ArticleList,
     Pagination,
     Footer,
@@ -71,6 +82,7 @@ export default {
       articleList: [],
       bannerLists: [], //轮播图数据
       rankLists: [],
+      tagLists: [],
       pageSize: 6, //每一页显示的数量
       total: null, //总条目数
     };
@@ -79,6 +91,7 @@ export default {
     this.getArticleList();
     this.getBannerList();
     this.getRankList();
+    this.getTagList();
   },
   methods: {
     // 获取轮播图数据
@@ -95,7 +108,7 @@ export default {
         pageSize: this.pageSize,
       });
       if (data.code === 0) {
-        this.articleList = data.data.ArticleInfo;
+        this.articleList = data.data.res;
         this.total = data.data.count;
       }
     },
@@ -108,9 +121,29 @@ export default {
         pageSize: 6,
       });
       if (data.code === 0) {
-        this.rankLists = data.data.ArticleInfo;
+        this.rankLists = data.data.res;
       }
     },
+
+    // 获取tag标签
+    async getTagList() {
+      const { data } = await article_getArticleTag({});
+      if (data.code === 0) {
+        this.tagLists = data.data;
+      }
+    },
+
+    // 获取点击tag子组件传递的tag名
+    getTagName(tagName) {
+      // 跳转页面 查询相关文章
+      this.$router.push({
+        path: "/tag",
+        query: {
+          tagName,
+        },
+      });
+    },
+
     // 点击分页
     async changePage(page) {
       await this.getArticleList(page);

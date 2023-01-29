@@ -25,7 +25,20 @@
                   <i class="el-icon-view"></i>
                   阅读量：{{ articleInfo.articleHandle.read }}
                 </p>
+                <div class="tag-box">
+                  <el-tag
+                    type="success"
+                    size="mini"
+                    class="tag"
+                    effect="plain"
+                    v-for="(item, index) in articleInfo.showTagList"
+                    :key="index"
+                  >
+                    {{ item }}
+                  </el-tag>
+                </div>
               </div>
+
               <!-- 分割线 -->
               <el-divider></el-divider>
               <p v-html="articleInfo.content" v-highlight class="content"></p>
@@ -60,7 +73,10 @@
                 effect="light"
                 :enterable="false"
               >
-                <div class="buttom-item">
+                <div
+                  :class="[isFans ? ['buttom-item', 'active'] : 'buttom-item']"
+                  @click="fans"
+                >
                   <span class="el-icon-user"></span>
                 </div>
               </el-tooltip>
@@ -71,7 +87,12 @@
                 effect="light"
                 :enterable="false"
               >
-                <div class="buttom-item">
+                <div
+                  :class="[
+                    isCollect ? ['buttom-item', 'active'] : 'buttom-item',
+                  ]"
+                  @click="collect"
+                >
                   <span class="el-icon-star-off"></span>
                 </div>
               </el-tooltip>
@@ -107,6 +128,7 @@ import Header from "../components/Header.vue";
 import Rank from "../components/Rank.vue";
 import Footer from "../components/Footer.vue";
 import Comment from "../components/Comment.vue";
+import { updateLocalUserInfo } from "@/untils/untils.js";
 import {
   article_getArticle,
   article_getStar,
@@ -114,8 +136,11 @@ import {
   article_deleteStar,
   article_createComment,
   article_getComment,
+  article_createCollection,
+  article_deleteCollection,
+  article_getCollection,
 } from "@/api/article_api.js";
-
+import { user_follow, user_upFollow, user_findFans } from "@/api/user_api.js";
 export default {
   components: {
     Header,
@@ -134,6 +159,8 @@ export default {
       commentList: [],
       commentContent: "", //评论框内容
       isStar: false,
+      isFans: false,
+      isCollect: false,
     };
   },
   created() {
@@ -141,8 +168,9 @@ export default {
     this.getRankList();
     this.getAuthorArticleList();
     // 判断是否登陆 来决定是否调用获取评论接口
+
     this.$store.state.token ? this.getComment() : "";
-    // 判断是否登陆 来决定是否调用检查点赞接口
+    // 判断是否登陆 来决定是否调用检查点赞 关注 收藏 接口
     this.$store.state.token ? this.checkArticleStatus() : "";
   },
 
@@ -151,7 +179,7 @@ export default {
       const { data } = await article_getArticle({
         articleId: this.$route.query.articleId,
       });
-      this.articleInfo = data.data.ArticleInfo[0];
+      this.articleInfo = data.data.res[0];
     },
     // 获取排行榜数据
     async getRankList() {
@@ -161,7 +189,7 @@ export default {
         pageSize: 6,
       });
       if (data.code === 0) {
-        this.rankLists = data.data.ArticleInfo;
+        this.rankLists = data.data.res;
       }
     },
 
@@ -173,7 +201,7 @@ export default {
       });
 
       if (data.code === 0) {
-        this.authorArticleLists = data.data.ArticleInfo;
+        this.authorArticleLists = data.data.res;
       }
     },
 
@@ -181,9 +209,12 @@ export default {
     async renderHtml(articleId) {
       const { data } = await article_getArticle({
         articleId: articleId,
-        pageSize: 6,
       });
-      this.articleInfo = data.data.ArticleInfo[0];
+      this.articleInfo = data.data.res[0];
+      // 清空上一个文章的评论
+      this.commentList = [];
+      // 判断是否登陆 调用评论接口 获取新文章评论
+      this.$store.state.token ? await this.getComment() : "";
     },
 
     // 查询文章状态是否点过赞 是否已收藏 是否关注了作者
@@ -192,9 +223,24 @@ export default {
         articleId: this.$route.query.articleId,
         userId: this.$store.state.userInfo.userId,
       });
+      const { data: data1 } = await user_findFans({
+        authorId: this.articleInfo.authorId,
+        userId: this.$store.state.userInfo.userId,
+      });
+
+      const { data: data2 } = await article_getCollection({
+        articleId: this.$route.query.articleId,
+        userId: this.$store.state.userInfo.userId,
+      });
 
       if (data.code === 0) {
         this.isStar = true;
+      }
+      if (data1.code === 0) {
+        this.isFans = true;
+      }
+      if (data2.code === 0) {
+        this.isCollect = true;
       }
     },
     // 获取评论数据
@@ -202,9 +248,7 @@ export default {
       const { data } = await article_getComment({
         articleId: this.$route.query.articleId,
       });
-      if (data.code === 0) {
-        this.commentList = data.data;
-      }
+      if (data.code === 0) this.commentList = data.data.res;
     },
 
     // 点赞事件
@@ -243,12 +287,79 @@ export default {
       }
     },
 
+    // 关注事件
+    async fans() {
+      if (this.isFans) {
+        // 如果已经是粉丝 则调用取消关注接口
+        const { data: data1 } = await user_upFollow({
+          userId: this.$store.state.userInfo.userId,
+          authorId: this.articleInfo.authorId,
+        });
+        if (data1.code === 0) {
+          this.isFans = false;
+          // 修改vuex中的用户数据
+          await updateLocalUserInfo(this.$store, data1.msg, "info");
+        }
+        return;
+      }
+      // 关注接口
+      const { data } = await user_follow({
+        userId: this.$store.state.userInfo.userId,
+        nickName: this.$store.state.userInfo.nickName,
+        authorId: this.articleInfo.authorId,
+        authorName: this.articleInfo.authorName,
+      });
+      if (data.code === 0) {
+        this.isFans = true;
+        // 修改vuex中的用户数据
+        await updateLocalUserInfo(this.$store, data.msg);
+      }
+    },
+
+    // 收藏事件
+    async collect() {
+      if (this.isCollect) {
+        // 如果已经收藏 则调用取消收藏接口
+        const { data: data1 } = await article_deleteCollection({
+          userId: this.$store.state.userInfo.userId,
+          articleId: this.$route.query.articleId,
+        });
+        if (data1.code === 0) {
+          this.isCollect = false;
+          this.$message({
+            message: data1.msg,
+            type: "info",
+            duration: 1000,
+          });
+        }
+        return;
+      }
+      // 关注接口
+      const { data } = await article_createCollection({
+        userId: this.$store.state.userInfo.userId,
+        nickName: this.$store.state.userInfo.nickName,
+        authorId: this.articleInfo.authorId,
+        authorName: this.articleInfo.authorName,
+        articleId: this.$route.query.articleId,
+        title: this.articleInfo.title,
+      });
+      if (data.code === 0) {
+        this.isCollect = true;
+        this.$message({
+          message: data.msg,
+          type: "success",
+          duration: 1000,
+        });
+      }
+    },
     // 评论事件 需要调用子组件事件
     async releaseComment(commentContent) {
       const { data } = await article_createComment({
         userId: this.$store.state.userInfo.userId,
         nickName: this.$store.state.userInfo.nickName,
-        avater: this.$store.state.userInfo.avater,
+        avater: this.$store.state.userInfo.avater
+          ? this.$store.state.userInfo.avater
+          : "http://rnla1fx0j.hn-bkt.clouddn.com/rootAdmin/defaultAvater.png",
         content: commentContent,
         title: this.articleInfo.title,
         authorId: this.articleInfo.authorId,
@@ -286,6 +397,13 @@ export default {
     .content {
       font-size: 13px;
       text-indent: 2em;
+    }
+    // 标签盒子
+    .tag-box {
+      margin-left: 5px;
+      .el-tag {
+        margin: 2px;
+      }
     }
     // 文章相关信息
     .article-about-info {

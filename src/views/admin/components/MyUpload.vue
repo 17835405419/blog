@@ -48,6 +48,11 @@ export default {
       type: String,
       required: true,
     },
+    // 照片墙默认照片
+    defultPictureCard: {
+      type: String,
+      default: "",
+    },
     // 限制最大上传图片
     limit: {
       type: Number,
@@ -76,6 +81,7 @@ export default {
       dialogImageUrl: "",
     };
   },
+
   methods: {
     // 上传成功事件
     handleSuccess(res, file) {

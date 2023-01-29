@@ -21,7 +21,7 @@
         align="center"
       >
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <div class="buttonbox">
             <el-button size="mini" @click="handleEdit(scope.row)"
@@ -64,21 +64,23 @@ export default {
     // 获取用户列表数据
     this.getArticleList();
   },
+
   methods: {
     async getArticleList(page = 1) {
       const { data } = await article_getArticle({
         page: page,
         userId: this.$store.state.userInfo.userId,
       });
-      this.articleList = data.data.ArticleInfo;
+      this.articleList = data.data.res;
       this.count = data.data.count;
     },
     // 更新按钮事件
+    // 使用Json.stringify 将传递的对象数据转化为json 目标页面再转为对象 防止传参后刷新数据丢失
     handleEdit(row) {
       this.$router.push({
         path: "/admin/article/update",
         query: {
-          id: row.id,
+          articleInfo: JSON.stringify(row),
         },
       });
     },
@@ -94,7 +96,6 @@ export default {
             userId: this.$store.state.userInfo.userId,
             articleId: row.articleId,
           });
-          console.log(data);
           if (data.code === 0) {
             // 删除之后重新获取数据
             await this.getArticleList();
@@ -124,3 +125,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.buttonbox {
+  display: flex;
+}
+</style>

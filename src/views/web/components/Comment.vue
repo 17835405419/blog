@@ -32,8 +32,7 @@
             <!--  v-if 和 v-for  不能同时使用 以额外再套一个 div-->
             <div  v-if="isShowComment">
                     <!-- 评论主要内容 -->
-            <div class="comment-content"
-            
+            <div class="comment-content"      
               v-for="(item, index) in commentList" :key="index">
               <div class="reviewer-info-box">
                 <el-avatar :size="35" :src="item.avater" round></el-avatar>
@@ -58,9 +57,16 @@
             </div>
             
 
+            <!-- 没有登录时显示的内容 -->
             <div class="nologin-comment-content" v-else>
             <i class="el-icon-s-release" :style='{fontSize:"40px"}'></i>
             <div>登录后可查看评论</div>
+          </div>
+
+
+          <!-- 没有评论时显示的内容 -->
+          <div class="no-comment-content" v-show="commentList.length ===0 && isShowComment">
+            <span>暂无评论，期待您的回复</span>
           </div>
           </div>
 
@@ -167,7 +173,7 @@ export default {
     .comment-content {
       position: relative;
       height: 102px;
-      margin-top: 10px;
+      margin-top: 15px;
 
       .reviewer-info-box {
         display: flex;
@@ -222,6 +228,12 @@ export default {
         color: #3d3d3d;
         cursor: pointer;
       }
+    }
+    .no-comment-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100px;
     }
   }
   // 取消最后一个评论下划线

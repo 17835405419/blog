@@ -24,6 +24,14 @@ export const article_deleteArticle = (params) => {
     params,
   });
 };
+// 更新文章
+export const article_updateArticle = (data) => {
+  return request({
+    method: "put",
+    url: "/article",
+    data,
+  });
+};
 // 获取文章列表
 export const article_getArticle = (params) => {
   return request({
@@ -98,6 +106,32 @@ export const article_getComment = (params) => {
   return request({
     method: "get",
     url: "/comment",
+    params,
+  });
+};
+
+/* 
+  文章收藏接口
+*/
+
+export const article_createCollection = (data) => {
+  return request({
+    method: "post",
+    url: "/collect",
+    data,
+  });
+};
+export const article_deleteCollection = (params) => {
+  return request({
+    method: "delete",
+    url: "/collect",
+    params,
+  });
+};
+export const article_getCollection = (params) => {
+  return request({
+    method: "get",
+    url: "/collect",
     params,
   });
 };

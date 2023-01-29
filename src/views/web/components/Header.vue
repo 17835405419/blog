@@ -7,10 +7,10 @@
 
     <div class="nav">
       <span @click="$router.push('/')">博客首页</span>
-      <span>技术博客</span>
-      <span>生活日志</span>
+      <span @click="$router.push('/technology')">技术博客</span>
+      <span @click="$router.push('/lifeLog')">生活日志</span>
       <span>留言</span>
-      <span>关于我</span>
+      <span @click="$router.push('/about')">关于我</span>
       <span>
         <i class="el-icon-zoom-in"></i>
       </span>
@@ -51,8 +51,8 @@ export default {};
   //   导航区域
   .nav {
     display: flex;
-    width: 675px;
-    margin-left: 220px;
+    width: 60%;
+    margin-left: 12vw;
     justify-content: space-between;
     font-size: 13px;
     span {

@@ -20,7 +20,7 @@
         </el-form-item>
         <el-form-item class="button-box">
           <span @click="$router.push('/register')">还没有账号？点击注册</span>
-          <el-button type="primary" size="mini" @click="$router.go(-1)"
+          <el-button type="primary" size="mini" @click="$router.push('/')"
             >取消</el-button
           >
           <el-button type="primary" size="mini" @click="getUserLogin"
@@ -45,8 +45,17 @@ export default {
       //   用户验证规则
       loginRules: {
         userName: [
-          { required: true, message: "请输入账号", trigger: "blur" },
-          { min: 9, max: 9, message: "长度在为九个字符", trigger: "blur" },
+          {
+            required: true,
+            message: "请输入账号",
+            trigger: "blur",
+          },
+          {
+            min: 9,
+            max: 9,
+            message: "长度为九个字符",
+            trigger: "blur",
+          },
         ],
       },
       // 用户信息

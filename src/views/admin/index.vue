@@ -43,22 +43,29 @@
               >文章列表</el-menu-item
             >
           </el-submenu>
-          <el-menu-item index="/admin/comment">
+          <el-menu-item index="/admin/article/star">
+            <span slot="title">
+              <i class="el-icon-thumb"></i>
+              点赞管理</span
+            >
+          </el-menu-item>
+          <el-menu-item index="/admin/article/comment">
             <span slot="title">
               <i class="el-icon-s-comment"></i>
               评论管理</span
             >
           </el-menu-item>
-          <el-menu-item index="/admin/fans">
+          <el-menu-item index="/admin/article/collection">
             <span slot="title">
-              <i class="el-icon-magic-stick"></i>
-              粉丝管理</span
+              <i class="el-icon-star-off"></i>
+              收藏列表</span
             >
           </el-menu-item>
-          <el-menu-item index="/admin/star">
+
+          <el-menu-item index="/admin/user/fansList">
             <span slot="title">
-              <i class="el-icon-thumb"></i>
-              点赞管理</span
+              <i class="el-icon-magic-stick"></i>
+              粉丝列表</span
             >
           </el-menu-item>
         </el-menu>
@@ -92,7 +99,7 @@ export default {
           });
           this.$store.commit("setUserToken", "");
           this.$store.commit("setUserInfo", "");
-          this.$router.push("/login");
+          this.$router.push("/");
         })
         .catch(() => {
           this.$message({
