@@ -7,7 +7,7 @@
     <el-main>
       <!-- 主要内容 -->
       <div class="nav-box">
-        <BreadCrumb class="bread" />
+        <BreadCrumb />
       </div>
       <div class="sectionPage-box">
         <div class="content" v-if="articleList.length !== 0">
@@ -32,7 +32,7 @@
         </div>
       </div>
       <Pagination
-        :style="{ margin: '20px 0 20px 12vw' }"
+        :style="{ margin: '40px 0 0  0' }"
         @changePage="changePage"
         :pageSize="pageSize"
         :total="total"
@@ -40,7 +40,7 @@
     </el-main>
     <el-footer>
       <!-- 底部区域 -->
-      <Footer />
+      <Footer :style="{ marginTop: '40px' }" />
     </el-footer>
   </el-container>
 </template>
@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       articleList: [],
-      pageSize: 20, //每一页显示的数量
+      pageSize: 10, //每一页显示的数量
       total: null, //总条目数
     };
   },
@@ -109,12 +109,17 @@ export default {
 </script>
 
 <style lang='less'scoped>
+.el-container {
+  background: linear-gradient(
+      rgba(238, 238, 238, 0.6),
+      rgba(255, 255, 255, 0.3)
+    ),
+    url("../../assets/image/index_bgc.webp");
+  background-size: 100% 100%;
+}
 .el-header,
 .el-footer {
   padding: 0;
-}
-.el-main {
-  height: 100vh;
 }
 .el-header {
   position: sticky;
@@ -124,46 +129,44 @@ export default {
   z-index: 9999;
 }
 
+.el-main {
+  width: 60vw;
+  height: 80vh;
+  margin: 0 auto;
+}
+
+// 面包屑导航
 .nav-box {
-  width: 69.7vw;
-  height: 45px;
+  height: 20px;
+  margin: 10px 0;
+  padding-left: 5px;
+  background-color: @color-white;
   display: flex;
   align-items: center;
-  background-color: #fff;
   border-left: 3px solid rgb(230, 173, 59);
-  margin: 0 auto;
-  margin-bottom: 10px;
-  .bread {
-    padding-left: 10px;
-  }
 }
 .sectionPage-box {
-  width: 70vw;
-  background-color: #fff;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
+  background-color: @color-white;
+  font-size: @fs-16;
+  color: @color-grey2;
+
   .articleList-box {
-    height: 40px;
+    height: 20px;
+    line-height: 20px;
     padding: 0 20px;
-    font-size: 13px;
-    color: rgb(128, 124, 124);
+    &:hover {
+      color: @color-grey4;
+      cursor: pointer;
+    }
     .article-time {
       padding-right: 20px;
     }
-    .article-title {
-      line-height: 40px;
-    }
   }
-  .articleList-box:hover {
-    color: #3d3d3d;
-    cursor: pointer;
-  }
+
   .no-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 15px;
+    .layoutFlexCenter(row);
+    font-size: @fs-15;
+
     height: 50px;
   }
 }

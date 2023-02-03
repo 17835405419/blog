@@ -8,41 +8,47 @@
       <!-- 文章内容 -->
       <el-main>
         <el-row>
-          <el-col :span="15" :offset="2">
+          <el-col :span="12" :offset="2">
             <!-- 显示内容区 -->
+
             <div class="article-content-box">
-              <h2 :style="{ marginBottom: 0 }">{{ articleInfo.title }}</h2>
+              <h2 class="article-title">{{ articleInfo.title }}</h2>
+              <!-- 文章相关信息 -->
               <div class="article-about-info">
-                <p>
+                <span class="about-item">
                   <i class="el-icon-alarm-clock"></i>
                   发布日期：{{ articleInfo.createTime | FormatTime }}
-                </p>
-                <p :style="{ width: '80px' }">
+                </span>
+                <span class="about-item author-name">
                   <i class="el-icon-user"></i>
                   作者：{{ articleInfo.authorName }}
-                </p>
-                <p>
+                </span>
+                <span class="about-item">
                   <i class="el-icon-view"></i>
                   阅读量：{{ articleInfo.articleHandle.read }}
-                </p>
-                <div class="tag-box">
-                  <el-tag
-                    type="success"
-                    size="mini"
-                    class="tag"
-                    effect="plain"
-                    v-for="(item, index) in articleInfo.showTagList"
-                    :key="index"
-                  >
-                    {{ item }}
-                  </el-tag>
-                </div>
+                </span>
+                <!-- 文章标签 -->
+                <el-tag
+                  type="success"
+                  size="mini"
+                  class="tag"
+                  effect="plain"
+                  v-for="(item, index) in articleInfo.showTagList"
+                  :key="index"
+                >
+                  {{ item }}
+                </el-tag>
               </div>
 
               <!-- 分割线 -->
               <el-divider></el-divider>
-              <p v-html="articleInfo.content" v-highlight class="content"></p>
+              <div
+                v-html="articleInfo.content"
+                v-highlight
+                class="article-content"
+              ></div>
             </div>
+
             <!-- 评论区 -->
             <Comment
               ref="commentRef"
@@ -101,7 +107,7 @@
           </el-col>
 
           <!-- 右侧区 -->
-          <el-col :span="5">
+          <el-col :span="5" :offset="2">
             <Rank
               title="作者相关"
               :rankLists="authorArticleLists"
@@ -116,10 +122,10 @@
           </el-col>
         </el-row>
       </el-main>
+      <el-footer>
+        <Footer :style="{ marginTop: '40px' }" />
+      </el-footer>
     </el-container>
-    <el-footer>
-      <Footer />
-    </el-footer>
   </div>
 </template>
 
@@ -381,83 +387,74 @@ export default {
 </script>
 
 <style lang='less' scoped>
+.el-container {
+  background: linear-gradient(
+      rgba(238, 238, 238, 0.6),
+      rgba(255, 255, 255, 0.3)
+    ),
+    url("@/assets/image/index_bgc.webp");
+  background-size: 100% 100%;
+}
 .el-header,
 .el-footer {
   padding: 0;
 }
-
 .el-main {
-  // 左边内容区
-  .article-content-box {
-    background-color: #fff;
-    margin-right: 10px;
-    width: 600px;
-    padding: 25px;
-    padding-top: 15px;
-    .content {
-      font-size: 13px;
-      text-indent: 2em;
-    }
-    // 标签盒子
-    .tag-box {
-      margin-left: 5px;
-      .el-tag {
-        margin: 2px;
-      }
-    }
-    // 文章相关信息
-    .article-about-info {
-      display: flex;
-      align-items: center;
-      p {
-        font-size: 12px;
-        margin-right: 10px;
-        overflow: hidden; //超出的文本隐藏
-        text-overflow: ellipsis; //溢出用省略号显示
-        white-space: nowrap; // 默认不换行；
-        i {
-          display: inline;
-        }
-      }
-    }
-    // 分割线
-    /deep/.el-divider {
-      margin: 0;
-    }
-    /deep/pre {
-      background-color: #2d2d2d;
-      line-height: 18px;
-    }
+  margin-top: 55px;
+  padding: 0;
+}
+.el-divider {
+  margin: 10px 0;
+}
+// 文章具体内容
+.article-content-box {
+  box-sizing: border-box; //怪异盒子
+  background-color: @color-white;
+  padding: 15px;
+  .article-title {
+    margin: 0;
   }
-  // 文章功能按键
-  .article-button-box {
-    position: fixed;
-    top: 150px;
-    left: 60px;
-    bottom: 150px;
-    // 文本居中
-    text-align: center;
-    width: 40px;
-    .buttom-item {
-      width: 40px;
-      height: 40px;
-      margin-top: 10px;
-      background-color: #fff;
-      box-shadow: 0px 0px 3px 1px rgb(215, 213, 213);
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
+  .article-content {
+    font-size: @fs-17;
+  }
+  // 文章相关信息
+  .article-about-info {
+    padding-top: 15px;
+    font-size: @fs-15;
+    .about-item {
+      margin-right: 5px;
     }
-    .button-name {
-      font-size: 12px;
-      color: #3b3b3b;
+    .el-tag {
+      margin: 0 2px;
     }
   }
 }
 
+// 文章功能按键
+.article-button-box {
+  position: fixed;
+  top: 100px;
+  left: 20px;
+  text-align: center;
+  font-size: @fs-17;
+  color: @color-grey3;
+  .buttom-item {
+    width: 30px;
+    height: 30px;
+    margin-top: 10px;
+    background-color: @color-white;
+    box-shadow: 0px 0px 3px 1px rgb(215, 213, 213);
+    border-radius: 50%;
+    cursor: pointer;
+    .layoutFlexCenter(row);
+  }
+  .button-name {
+    font-size: @fs-13;
+  }
+}
+
+// 选中后颜色
 .active {
-  color: rgb(216, 41, 41);
+  color: @color-red4;
 }
 </style>

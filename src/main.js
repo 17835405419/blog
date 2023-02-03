@@ -2,6 +2,9 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+// 引入全局less文件
+import "@/assets/style/commonStyle.less";
+
 //引入组件库
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";

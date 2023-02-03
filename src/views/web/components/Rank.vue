@@ -1,18 +1,15 @@
 <template>
-  <el-card class="card-box">
+  <el-card>
     <div slot="header" class="header-box">
       <span>|</span>
       <span>{{ title }}</span>
     </div>
-    <div class="content-box">
-      <div class="text-item" v-for="(item, index) in rankLists" :key="index">
-        <div class="text-content">
-          <p @click="goToArticleInfo(item.articleId)">
-            {{ item.title }}
-          </p>
-          <p>阅读：{{ item.articleHandle.read }}</p>
-        </div>
-      </div>
+
+    <div class="content-item" v-for="(item, index) in rankLists" :key="index">
+      <p @click="goToArticleInfo(item.articleId)">
+        {{ item.title }}
+      </p>
+      <p>阅读：{{ item.articleHandle.read }}</p>
     </div>
   </el-card>
 </template>
@@ -50,40 +47,35 @@ export default {
 </script>
 
 <style lang='less' scoped>
-.card-box {
-  height: 100%;
-}
 /deep/.el-card__header {
   padding: 13px;
   font-size: 12px;
   .header-box {
-    span:last-child {
-      padding-left: 10px;
+    span {
+      font-size: @fs-16;
+      color: @color-grey3;
+      &:last-child {
+        padding-left: 10px;
+      }
     }
   }
 }
 /deep/.el-card__body {
-  padding: 10px 10px 10px 13px;
+  padding: 10px 10px 10px 20px;
 }
-.text-item {
-  font-size: 12px;
-  .text-content {
-    display: flex;
-    flex-direction: column;
-    margin-top: 5px;
-    p {
-      margin: 0;
-      color: #777171;
-    }
-    p:last-child {
-      font-size: 9px;
-      -webkit-transform-origin-x: 0; //兼容谷歌
-      -webkit-transform: scale(0.8); //按比例缩小文字
-      color: rgb(139, 137, 137);
-    }
-    p:first-child:hover {
-      text-decoration: underline rgb(177, 175, 175);
+.content-item {
+  p {
+    margin: 3px 0;
+    font-size: @fs-15;
+    color: @color-grey2;
+    &:first-child:hover {
       cursor: pointer;
+      color: @color-grey4;
+      text-decoration: underline;
+    }
+    &:last-child {
+      font-size: @fs-12;
+      margin-bottom: 5px;
     }
   }
 }

@@ -1,28 +1,30 @@
 <template>
-  <el-card class="card-box" shadow="hover">
-    <div class="content-box">
-      <div class="img-box" v-if="articleInfo.articleImg">
-        <img :src="articleInfo.articleImg" alt="" />
+  <el-card class="article-box" shadow="hover">
+    <div class="article_content-box">
+      <div class="content_img-box" v-if="articleInfo.articleImg">
+        <img class="img" :src="articleInfo.articleImg" alt="封面" />
       </div>
 
-      <div class="text-box">
-        <span class="title" @click="goToArticleInfo(articleInfo.articleId)">{{
-          articleInfo.title
-        }}</span>
-        <div class="content">
-          <p v-html="articleInfo.content.replace(/<[^>]+>/g, '')"></p>
-        </div>
-        <div class="userInfo">
-          <span class="el-icon-date"
+      <div class="content_text-box">
+        <h4 class="text-title" @click="goToArticleInfo(articleInfo.articleId)">
+          {{ articleInfo.title }}
+        </h4>
+        <p
+          class="text-content"
+          v-html="articleInfo.content.replace(/<[^>]+>/g, '')"
+        ></p>
+
+        <div class="text-info">
+          <span class="el-icon-date info"
             >&nbsp&nbsp{{ articleInfo.createTime | FormatTime }}</span
           >
-          <span class="el-icon-chat-dot-square"
+          <span class="el-icon-chat-dot-square info"
             >&nbsp&nbsp{{ articleInfo.articleHandle.comment }}</span
           >
-          <span class="el-icon-thumb"
+          <span class="el-icon-thumb info"
             >&nbsp&nbsp{{ articleInfo.articleHandle.star }}</span
           >
-          <span class="el-icon-view"
+          <span class="el-icon-view info"
             >&nbsp&nbsp{{ articleInfo.articleHandle.read }}</span
           >
         </div>
@@ -72,87 +74,72 @@ export default {
 /deep/.el-card__body {
   padding: 0;
 }
-.card-box {
-  height: 140px;
 
-  .content-box {
-    position: relative;
-    display: flex;
-    height: 120px;
-    padding: 12px 0 0 10px;
-    // 文章的图片
-    .img-box {
-      position: absolute;
-      right: 50px;
-      height: 100px;
-      width: 100px;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
+.article_content-box {
+  position: relative;
+  height: 80px;
+  box-sizing: border-box; //怪异盒子
+  padding: 10px;
+}
+// 文章图片盒子
+.content_img-box {
+  position: absolute;
+  right: 30px;
+  height: 60px;
+  width: 60px;
+  .img {
+    width: 100%;
+    height: 100%;
+  }
+}
 
-    //列表样式
-    .text-box {
-      position: relative;
-      padding-left: 10px;
-      height: 100%;
-      .title {
-        font-size: 13px;
-        height: 20%;
-        display: block;
-      }
-      .content {
-        height: 62%;
-        p {
-          line-height: 1.5;
-          margin: 8px 0 0 0;
-          font-size: 11px;
-          -webkit-transform-origin-x: 0; //兼容谷歌
-          -webkit-transform: scale(0.9); //按比例缩小文字
-          // 文字省略
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 2; // 想要超出三行显示 就把这里改成3就好了
-        }
-      }
-
-      .title:hover {
-        cursor: pointer;
-      }
-
-      // 文章信息
-      .userInfo {
-        height: 10%;
-        display: flex;
-        span {
-          color: rgb(48, 46, 46);
-          font-size: 9px;
-          -webkit-transform-origin-x: 0; //兼容谷歌
-          -webkit-transform: scale(0.8); //按比例缩小文字
-        }
-        span:not(:first-child) {
-          width: 48px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-      }
+//列表样式
+.content_text-box {
+  padding-left: 10px;
+  // 标题
+  .text-title {
+    font-size: @fs-16;
+    margin: 0;
+    font-weight: 500;
+    &:hover {
+      cursor: pointer;
     }
   }
 
-  //   标签
-  .tag-box {
+  .text-content {
+    font-size: @fs-13;
+    // 文字省略
+    .ellipsisMultiline(2) //超出两行省略;
+  }
+
+  // 文章信息
+  .text-info {
     display: flex;
+    align-items: center;
     position: absolute;
-    left: 280px;
-    bottom: -2px;
-    .tag {
-      line-height: 17px;
-      font-size: 9px;
-      -webkit-transform: scale(0.8); //按比例缩小文字
+    bottom: 10px;
+    .info {
+      color: @color-grey2;
+      font-size: @fs-13;
+      &:first-child {
+        padding-right: 10px;
+      }
+      &:not(:first-child) {
+        width: 30px;
+        .ellipsisLine(); //单行超出省略
+      }
     }
+  }
+}
+//   标签
+.tag-box {
+  position: absolute;
+  right: 30px;
+  bottom: 6px;
+  .tag {
+    height: 12px;
+    line-height: 12px;
+    margin: 0 2px;
   }
 }
 </style>

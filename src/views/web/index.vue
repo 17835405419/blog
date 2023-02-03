@@ -7,27 +7,30 @@
     <!-- 主体 -->
     <el-main>
       <el-row>
-        <el-col :span="15">
+        <el-col :span="12" :offset="2">
           <!--轮播图 -->
           <Swiper :swiperItem="bannerLists" />
           <!-- 文章列表 -->
           <div
+            class="article-list-box"
             v-for="(item, index) in articleList"
             :key="index"
             :style="{ marginTop: '30px' }"
           >
-            <ArticleList :style="{ marginTop: '15px' }" :articleInfo="item" />
+            <ArticleList :articleInfo="item" />
           </div>
           <!-- 分页 -->
+
           <Pagination
-            :style="{ marginTop: '20px' }"
+            :style="{ margin: '40px 0 0  0' }"
+            class="page"
             @changePage="changePage"
             :pageSize="pageSize"
             :total="total"
           />
         </el-col>
 
-        <el-col :span="6" :offset="2">
+        <el-col :span="5" :offset="3">
           <!-- 博主介绍 -->
           <Introduction />
           <!-- 阅读排行 -->
@@ -47,7 +50,7 @@
     </el-main>
     <!-- 底部 -->
     <el-footer>
-      <Footer />
+      <Footer :style="{ marginTop: '40px' }" />
     </el-footer>
   </el-container>
 </template>
@@ -83,7 +86,7 @@ export default {
       bannerLists: [], //轮播图数据
       rankLists: [],
       tagLists: [],
-      pageSize: 6, //每一页显示的数量
+      pageSize: 8, //每一页显示的数量
       total: null, //总条目数
     };
   },
@@ -155,8 +158,20 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.el-container {
+  background: linear-gradient(
+      rgba(238, 238, 238, 0.6),
+      rgba(255, 255, 255, 0.3)
+    ),
+    url("../../assets/image/index_bgc.webp");
+  background-size: 100% 100%;
+}
 .el-header,
 .el-footer {
+  padding: 0;
+}
+.el-main {
+  margin-top: 55px;
   padding: 0;
 }
 .el-header {
@@ -165,8 +180,5 @@ export default {
   left: 0;
   right: 0;
   z-index: 9999;
-}
-.el-main {
-  margin: 0 80px;
 }
 </style>

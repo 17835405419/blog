@@ -1,18 +1,17 @@
 <template>
   <el-card>
     <div slot="header">
-      <span class="top-title">标签云</span>
+      <span class="header_tag-title">标签云</span>
     </div>
-    <div class="tag-content">
-      <el-tag
-        :color="bgColor(index)"
-        size="small"
-        v-for="(item, index) in tagLists"
-        :key="index"
-        @click="transmitTag(item.tagName)"
-        >{{ item.tagName }}</el-tag
-      >
-    </div>
+
+    <el-tag
+      :color="bgColor(index)"
+      size="middle"
+      v-for="(item, index) in tagLists"
+      :key="index"
+      @click="transmitTag(item.tagName)"
+      >{{ item.tagName }}</el-tag
+    >
   </el-card>
 </template>
 
@@ -44,23 +43,24 @@ export default {
 
 <style lang='less' scoped>
 /deep/.el-card__header {
-  padding: 12px 12px 12px 23px;
+  padding: 13px;
 }
 /deep/.el-card__body {
   padding: 10px;
 }
-.top-title {
-  font-size: 12px;
+.header_tag-title {
+  font-size: @fs-16;
+  color: @color-grey3;
 }
-.tag-content {
-  .el-tag {
-    color: #fff;
-    margin: 3px;
-    cursor: pointer;
-  }
-  .el-tag:hover {
-    box-shadow: 0 0 5px 1px #d7d5d5;
-    color: #ab6262;
+
+.el-tag {
+  color: @color-white;
+  margin: 8px;
+  cursor: pointer;
+  &:hover {
+    color: @color-black;
+    transition: all 0.5s;
+    box-shadow: 1px 3px 8px 0.3px @color-grey2;
   }
 }
 </style>

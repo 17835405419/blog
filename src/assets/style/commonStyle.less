@@ -1,0 +1,52 @@
+/* 
+    颜色相关变量  
+    @ 1-5 颜色由浅到深
+*/
+@color-white:#fff;
+@color-black:#000;
+@color-grey1:#eee;
+@color-grey2:rgb(133, 133, 133);
+@color-grey3:rgb(82,78,78);
+@color-grey4:rgb(36, 36, 36);
+@color-red4:rgb(199, 28, 28);
+
+/* 
+    字体相关变量
+*/
+
+@fs-12:12px;
+@fs-13:13px;
+@fs-14:14px;
+@fs-15:15px;
+@fs-16:16px;
+@fs-17:17px;
+@fs-40:40px;
+
+/* 
+    相关混入
+*/
+
+// 多行省略
+.ellipsisMultiline(@rows){
+    display: -webkit-box; /* 将对象作为弹性伸缩盒子模型显示 */
+    -webkit-box-orient: vertical; /* 设置或检索伸缩盒对象的子元素的排列方式 */
+    -webkit-line-clamp: @rows; /* 行数 */
+    // word-break: break-all; /* 纯英文换行 */
+    overflow: hidden;
+}
+
+// 单行省略
+.ellipsisLine(){
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// flex 居中   @@direction  布局方向
+.layoutFlexCenter(@direction){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: @direction;
+    
+}

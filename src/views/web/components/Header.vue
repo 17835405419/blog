@@ -1,11 +1,11 @@
 <template>
   <div class="header-box">
-    <div class="logo-box">
-      <img src="@/assets/favicon.png" alt="" />
-      <span>文霄博客站</span>
+    <div class="header_logo-box">
+      <img class="header_logo-img" src="@/assets/favicon.png" alt="Logo" />
+      <span class="header_title-name">文霄博客站</span>
     </div>
 
-    <div class="nav">
+    <div class="header_nav-box">
       <span @click="$router.push('/')">博客首页</span>
       <span @click="$router.push('/technology')">技术博客</span>
       <span @click="$router.push('/lifeLog')">生活日志</span>
@@ -29,38 +29,38 @@ export default {};
 .header-box {
   display: flex;
   align-items: center;
-  background-color: #fff;
-  box-shadow: 1px 1px 5px 1px #eee;
-  width: 100%;
-  height: 55px;
-
-  .logo-box {
-    display: flex;
-    align-items: center;
-    margin: 0 6%;
-    img {
-      width: 30px;
-      height: 30px;
-    }
-    span {
-      font-size: 12px;
-      color: rgb(82, 78, 78);
-      margin-left: 10px;
-    }
+  justify-content: space-between;
+  background-color: @color-white;
+  // box-shadow: 1px 1px 5px 1px #eee;
+  height: 35px;
+}
+// 左侧Logo区
+.header_logo-box {
+  display: flex;
+  align-items: center;
+  padding-left: 50px;
+  .header_logo-img {
+    width: 15px;
+    height: 15px;
   }
-  //   导航区域
-  .nav {
-    display: flex;
-    width: 60%;
-    margin-left: 12vw;
-    justify-content: space-between;
-    font-size: 13px;
-    span {
-      color: rgb(136, 125, 125);
-    }
-    span:hover {
+  .header_title-name {
+    font-size: @fs-17;
+    color: @color-grey3;
+    padding-left: 5px;
+  }
+}
+//   导航区域
+.header_nav-box {
+  display: flex;
+  justify-content: space-between;
+  width: 45vw;
+  padding-right: 50px;
+  font-size: @fs-17;
+  span {
+    color: @color-grey2;
+    &:hover {
       cursor: pointer;
-      color: rgb(65, 61, 61);
+      color: @color-grey4;
     }
   }
 }
