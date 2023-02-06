@@ -73,13 +73,13 @@ export default {
   justify-content: space-between;
   cursor: pointer;
   .title {
-    padding-left: 20px;
+    padding-left: 10px;
   }
   .title:hover {
     color: #93cbe1;
   }
   .collect-time {
-    font-size: 12px;
+    font-size: @fs-12;
   }
 }
 </style>

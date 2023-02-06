@@ -10,7 +10,9 @@
         <el-row>
           <el-col :span="12" :offset="2">
             <!-- 显示内容区 -->
-
+            <div class="nav-box">
+              <BreadCrumb />
+            </div>
             <div class="article-content-box">
               <h2 class="article-title">{{ articleInfo.title }}</h2>
               <!-- 文章相关信息 -->
@@ -130,6 +132,7 @@
 </template>
 
 <script>
+import BreadCrumb from "@/components/BreadCrumb.vue";
 import Header from "../components/Header.vue";
 import Rank from "../components/Rank.vue";
 import Footer from "../components/Footer.vue";
@@ -153,6 +156,7 @@ export default {
     Rank,
     Comment,
     Footer,
+    BreadCrumb,
   },
   data() {
     return {
@@ -271,6 +275,7 @@ export default {
             message: data1.msg,
             type: "info",
             duration: 1000,
+            offset: 85,
           });
         }
         return;
@@ -289,6 +294,7 @@ export default {
           message: data.msg,
           type: "success",
           duration: 1000,
+          offset: 85,
         });
       }
     },
@@ -330,12 +336,14 @@ export default {
           userId: this.$store.state.userInfo.userId,
           articleId: this.$route.query.articleId,
         });
+        console.log(data1);
         if (data1.code === 0) {
           this.isCollect = false;
           this.$message({
             message: data1.msg,
             type: "info",
             duration: 1000,
+            offset: 85,
           });
         }
         return;
@@ -355,6 +363,7 @@ export default {
           message: data.msg,
           type: "success",
           duration: 1000,
+          offset: 85,
         });
       }
     },
@@ -400,7 +409,7 @@ export default {
   padding: 0;
 }
 .el-main {
-  margin-top: 55px;
+  margin-top: 40px;
   padding: 0;
 }
 .el-divider {

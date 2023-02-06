@@ -1,6 +1,6 @@
 <template>
   <div class="login-box">
-    <el-card class="content">
+    <el-card class="login-content">
       <div class="title">博客登陆</div>
       <el-form :model="user" :rules="loginRules" ref="loginForm">
         <el-form-item prop="userName">
@@ -20,12 +20,8 @@
         </el-form-item>
         <el-form-item class="button-box">
           <span @click="$router.push('/register')">还没有账号？点击注册</span>
-          <el-button type="primary" size="mini" @click="$router.push('/')"
-            >取消</el-button
-          >
-          <el-button type="primary" size="mini" @click="getUserLogin"
-            >登录</el-button
-          >
+          <el-button size="mini" @click="$router.push('/')">取消</el-button>
+          <el-button size="mini" @click="getUserLogin">登录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -104,41 +100,42 @@ export default {
 <style lang="less" scoped>
 .login-box {
   height: 100vh;
-  width: 100vw;
-  background: url("../../../assets//loginBgc.png") no-repeat;
+  background: url("@/assets/image/index_bgc.webp") no-repeat;
   background-size: 100% 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .content {
-    width: 390px;
-    height: 260px;
-    background-color: rgba(249, 247, 247, 0.3);
-    box-shadow: 0px 0px 12px #eee;
-    .title {
-      text-align: center;
-      font-weight: 500;
-      margin-bottom: 30px;
-      font-size: 18px;
-      color: rgb(255, 255, 255);
-    }
-    // 修改输入框默认样式
-    /deep/.el-input__inner {
-      background-color: rgba(255, 255, 255, 0.3) !important;
-    }
+  .layoutFlexCenter(row);
+}
 
-    .button-box {
-      display: flex;
-      justify-content: flex-end;
-      span {
-        font-size: 12px;
-        margin-right: 20px;
-        color: rgba(255, 255, 255, 0.4);
-      }
-      span:hover {
-        color: rgb(255, 255, 255);
-        cursor: pointer;
-      }
+.login-content {
+  width: 200px;
+  height: 150px;
+  background-color: @color-grey1;
+  box-shadow: 3px 4px 8px 0.5px #c4bfbfb6;
+  &:hover {
+    box-shadow: 3px 4px 8px 0.5px #b8b4b4;
+  }
+  .title {
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 20px;
+    font-size: @fs-18;
+    color: @color-grey2;
+  }
+  // 修改输入框默认样式
+  /deep/.el-input__inner {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+  }
+
+  .button-box {
+    display: flex;
+    justify-content: flex-end;
+    span {
+      font-size: @fs-12;
+      margin-right: 20px;
+      color: @color-grey2;
+    }
+    span:hover {
+      color: @color-grey4;
+      cursor: pointer;
     }
   }
 }

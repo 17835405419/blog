@@ -5,10 +5,9 @@
       <Header />
     </el-header>
     <el-main>
+      <!-- 面包屑导航 -->
+      <BreadCrumb />
       <!-- 主要内容 -->
-      <div class="nav-box">
-        <BreadCrumb />
-      </div>
       <div class="sectionPage-box">
         <div class="content" v-if="articleList.length !== 0">
           <div
@@ -88,8 +87,8 @@ export default {
         page: page,
         pageSize: this.pageSize,
         articlPartName:
-          this.$route.meta.title !== "Tags" ? this.$route.meta.title : "",
-        tagName: this.$route.query.tagName ? this.$route.query.tagName : "",
+          this.$route.meta.title !== "标签" ? this.$route.meta.title : "",
+        tagName: this.$route.query.name ? this.$route.query.name : "",
       });
 
       if (data.code === 0) {
@@ -135,16 +134,6 @@ export default {
   margin: 0 auto;
 }
 
-// 面包屑导航
-.nav-box {
-  height: 20px;
-  margin: 10px 0;
-  padding-left: 5px;
-  background-color: @color-white;
-  display: flex;
-  align-items: center;
-  border-left: 3px solid rgb(230, 173, 59);
-}
 .sectionPage-box {
   background-color: @color-white;
   font-size: @fs-16;

@@ -64,6 +64,7 @@ import TagBox from "./components/TagBox.vue";
 import ArticleList from "./components/ArticleList.vue";
 import Pagination from "@/components/Pagination.vue";
 import Footer from "./components/Footer.vue";
+
 import {
   article_getArticle,
   article_getArticleTag,
@@ -88,6 +89,7 @@ export default {
       tagLists: [],
       pageSize: 8, //每一页显示的数量
       total: null, //总条目数
+      isShowSearch: false,
     };
   },
   created() {
@@ -142,7 +144,7 @@ export default {
       this.$router.push({
         path: "/tag",
         query: {
-          tagName,
+          name: tagName,
         },
       });
     },

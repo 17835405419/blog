@@ -1,7 +1,7 @@
 <template>
   <div class="personal-box">
-    <el-form label-width="80px" :model="userForm">
-      <el-form-item label="头像">
+    <el-form label-width="120px" :model="userForm">
+      <el-form-item label="头像" class="avater-box">
         <el-avatar :size="50" :src="userForm.avater"></el-avatar>
         <Upload
           :action="action"
@@ -70,7 +70,12 @@
           修改
         </el-button>
 
-        <el-button type="success" size="mini" round @click="change"
+        <el-button
+          type="success"
+          size="mini"
+          round
+          @click="change"
+          :disabled="isDisable"
           >应用</el-button
         >
       </el-form-item>
@@ -124,14 +129,20 @@ export default {
 </script>
 
 <style lang="less" scoped>
-/deep/.el-form-item {
-  width: 30%;
-  margin: 0 0 20px 0;
+// 修改第一盒子
+/deep/.avater-box .el-form-item__content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  .el-avatar {
+    margin-right: 10px;
+  }
 }
-.upload-button {
-  position: absolute;
-  top: 5px;
-  left: 70px;
+
+.personal-box {
+  width: 200px;
+  margin-top: 30px;
+  transform: scale(1.2);
 }
 </style>
 

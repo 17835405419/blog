@@ -1,7 +1,7 @@
 <template>
   <div class="register-box">
-    <el-card class="content">
-      <div class="register-title">注册账号</div>
+    <el-card class="register-content">
+      <div class="title">注册账号</div>
       <el-form
         :model="users"
         :rules="registerRules"
@@ -21,9 +21,9 @@
         <el-form-item label="确认密码" prop="checkPassWord">
           <el-input v-model="users.checkPassWord"></el-input>
         </el-form-item>
-        <div class="buttonBox">
-          <el-button type="success" size="mini" @click="register"
-            >注册</el-button
+        <div class="button-box">
+          <el-button type="primary" size="mini" @click="$router.push('/login')"
+            >返回</el-button
           >
           <el-button
             type="info"
@@ -31,8 +31,8 @@
             @click="$refs.regForm.resetFields()"
             >重置</el-button
           >
-          <el-button type="primary" size="mini" @click="$router.push('/login')"
-            >返回</el-button
+          <el-button type="success" size="mini" @click="register"
+            >注册</el-button
           >
         </div>
       </el-form>
@@ -121,32 +121,39 @@ export default {
 <style lang="less" scoped>
 .register-box {
   height: 100vh;
-  width: 100vw;
-  background: url("@/assets/loginBgc.png") no-repeat;
+  background: url("@/assets/image/index_bgc.webp") no-repeat;
   background-size: 100% 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .content {
-    width: 450px;
-    .register-title {
-      text-align: center;
-      font-weight: 800;
-      padding-bottom: 20px;
-      font-size: 19px;
+  .layoutFlexCenter(row);
+}
+.register-content {
+  width: 200px;
+  height: 150px;
+  background-color: @color-grey1;
+  box-shadow: 3px 4px 8px 0.5px #c4bfbfb6;
+  &:hover {
+    box-shadow: 3px 4px 8px 0.5px #b8b4b4;
+  }
+  .title {
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 20px;
+    font-size: @fs-18;
+    color: @color-grey2;
+  }
+  // 修改输入框默认样式
+  /deep/.el-input__inner {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+  }
+  .button-box {
+    display: flex;
+    justify-content: flex-end;
+    span {
+      font-size: 13px;
+      margin-right: 20px;
     }
-    .buttonBox {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 30px;
-      span {
-        font-size: 13px;
-        margin-right: 20px;
-      }
-      span:hover {
-        color: rgb(145, 141, 141);
-        cursor: pointer;
-      }
+    span:hover {
+      color: rgb(145, 141, 141);
+      cursor: pointer;
     }
   }
 }

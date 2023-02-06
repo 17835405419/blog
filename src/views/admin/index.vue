@@ -5,13 +5,15 @@
       <div class="title">作者中心</div>
       <div class="header-right-box">
         <span @click="$router.push('/')">网站首页</span>
-        <el-avatar
-          shape="circle"
-          key="cover"
-          :src="$store.state.userInfo.avater"
-        ></el-avatar>
-        <!-- 昵称 -->
-        <span>{{ $store.state.userInfo.nickName }}</span>
+        <div class="user-info-box">
+          <el-avatar
+            shape="circle"
+            key="cover"
+            :src="$store.state.userInfo.avater"
+          ></el-avatar>
+          <!-- 昵称 -->
+          <span>{{ $store.state.userInfo.nickName }}</span>
+        </div>
         <!-- 退出按钮 -->
         <span class="outButton" @click="outLogin">退出</span>
       </div>
@@ -20,7 +22,7 @@
     <el-container>
       <el-aside width="198px">
         <el-menu
-          background-color="rgb(114, 111, 111)"
+          background-color="rgb(133, 133, 133)"
           text-color="#fff"
           :unique-opened="true"
           :router="true"
@@ -116,53 +118,74 @@ export default {
 .container {
   height: 100vh;
 }
-
+.el-main {
+  background: linear-gradient(
+      rgba(238, 238, 238, 0.6),
+      rgba(255, 255, 255, 0.3)
+    ),
+    url("../../assets/image/index_bgc.webp");
+  background-size: 100% 100%;
+}
 // 修改二级列表样式
 .el-submenu {
   min-width: 198px;
-  .el-menu-item {
-    font-size: 12px;
+
+  /deep/ .el-menu-item {
+    font-size: @fs-12;
     text-align: center;
   }
 }
-
 /deep/.el-menu-item {
   min-width: 198px;
 }
+.el-menu-item.is-active {
+  background-color: rgba(48, 48, 202, 0.5) !important;
+}
+/deep/.el-submenu__title:hover {
+  background-color: rgba(48, 48, 202, 0.5) !important;
+}
+.el-menu-item:hover {
+  background-color: rgba(48, 48, 202, 0.5) !important;
+}
+
 // 头部样式
 .el-header {
-  background-color: rgb(114, 111, 111);
+  height: 70px !important;
+  background-color: @color-grey2;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: @fs-17;
 
   .title {
     color: #fff;
     font-weight: 600;
-    font-size: 20px;
   }
   .header-right-box {
     display: flex;
     align-items: center;
     width: 22%;
     justify-content: space-around;
-    font-size: 14px;
+    font-size: @fs-15;
     color: #fff;
-
-    // 网站首页 效果设置
-    span:hover {
-      cursor: pointer;
-      color: #eee;
+    .user-info-box {
+      display: flex;
+      align-items: center;
+      span {
+        padding-left: 5px;
+      }
     }
+    // 网站首页 效果设置
+    span:first-child:hover,
     .outButton:hover {
-      text-decoration: underline;
-      color: rgb(40, 40, 48);
+      cursor: pointer;
+      color: @color-grey4;
     }
   }
 }
 
 // // 侧边栏样式
 .el-aside {
-  background-color: rgb(114, 111, 111);
+  background-color: @color-grey2;
 }
 </style>

@@ -6,7 +6,7 @@
     </div>
 
     <div class="content-item" v-for="(item, index) in rankLists" :key="index">
-      <p @click="goToArticleInfo(item.articleId)">
+      <p @click="goToArticleInfo(item.articleId, item.title)">
         {{ item.title }}
       </p>
       <p>阅读：{{ item.articleHandle.read }}</p>
@@ -31,7 +31,7 @@ export default {
     return {};
   },
   methods: {
-    goToArticleInfo(articleId) {
+    goToArticleInfo(articleId, title) {
       // 将点击的id回传给父组件
       this.$emit("toInfoQuery", articleId);
 
@@ -39,6 +39,7 @@ export default {
         path: "/articleInfo",
         query: {
           articleId,
+          name: title,
         },
       });
     },

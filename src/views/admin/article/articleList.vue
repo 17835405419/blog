@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="articleList" style="width: 100%" size="mini">
+    <el-table :data="articleList" style="width: 100%" size="small">
       <el-table-column label="文章标题" prop="title"> </el-table-column>
 
       <!--  在prop中格式化时间  -->

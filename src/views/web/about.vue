@@ -19,7 +19,7 @@ export default {};
 <style lang='less' scoped>
 .about-box {
   box-sizing: border-box;
-  padding: 20px;
+  padding: 10px;
   .header {
     height: 95vh;
     background: url("@/assets/aboutBgc.jpg") no-repeat;
@@ -59,12 +59,12 @@ export default {};
       align-items: center;
       border-radius: 50%;
       border: 1px solid #fff;
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       background-color: #fff;
       position: absolute;
-      top: 40px;
-      right: 40px;
+      top: 30px;
+      right: 30px;
       color: #3d3d3d;
       cursor: pointer;
     }

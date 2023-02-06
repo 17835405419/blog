@@ -7,6 +7,7 @@
         :size="size"
         :src="userInfo ? userInfo.avater : defaultAvater"
       ></el-avatar>
+
       <span class="user_nickName">{{
         userInfo ? userInfo.nickName : "游客"
       }}</span>
@@ -16,7 +17,7 @@
     </div>
     <div class="user_decx-box">
       <span>
-        {{ userInfo ? userInfo.desc : "暂无简介" }}
+        {{ userInfo.desc ? userInfo.desc : "暂无简介" }}
       </span>
     </div>
   </div>
@@ -50,9 +51,11 @@ export default {
   color: @color-grey3;
 }
 .user-info-box {
+  position: relative;
   display: flex;
   align-items: center;
   padding: 10px 0 0 0;
+
   span {
     font-size: @fs-14;
     color: @color-grey3;
@@ -60,9 +63,10 @@ export default {
       padding: 0 5px;
     }
   }
-  .user_fans-num {
-    margin-left: 35px;
-  }
+}
+.user_fans-num {
+  position: absolute;
+  right: 0;
 }
 .user_decx-box {
   font-size: @fs-14;

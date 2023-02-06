@@ -6,6 +6,11 @@ const VueRouterPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(to) {
   return VueRouterPush.call(this, to).catch((err) => err);
 };
+// 重写replace方法
+const VueRouterReplace = VueRouter.prototype.replace;
+VueRouter.prototype.replace = function replace(to) {
+  return VueRouterReplace.call(this, to).catch((err) => err);
+};
 
 Vue.use(VueRouter);
 
@@ -49,7 +54,7 @@ const routes = [
     name: "tag",
     component: () => import("@/views/web/selctionPage.vue"),
     meta: {
-      title: "Tags",
+      title: "标签",
     },
   }, // 点击tag 查询文章
   {
@@ -57,9 +62,17 @@ const routes = [
     name: "about",
     component: () => import("@/views/web/about.vue"),
     meta: {
-      title: "about",
+      title: "关于",
     },
   }, // 关于我
+  {
+    path: "/leaveMessage",
+    name: "leaveMessage",
+    component: () => import("@/views/web/leaveMessage.vue"),
+    meta: {
+      title: "留言",
+    },
+  }, // 留言版
 
   // 后台作者端
   {

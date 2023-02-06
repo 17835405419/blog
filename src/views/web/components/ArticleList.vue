@@ -6,7 +6,10 @@
       </div>
 
       <div class="content_text-box">
-        <h4 class="text-title" @click="goToArticleInfo(articleInfo.articleId)">
+        <h4
+          class="text-title"
+          @click="goToArticleInfo(articleInfo.articleId, articleInfo.title)"
+        >
           {{ articleInfo.title }}
         </h4>
         <p
@@ -58,11 +61,12 @@ export default {
     return {};
   },
   methods: {
-    goToArticleInfo(articleId) {
+    goToArticleInfo(articleId, title) {
       this.$router.push({
         path: "/articleInfo",
         query: {
           articleId,
+          name: title,
         },
       });
     },

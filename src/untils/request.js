@@ -36,13 +36,17 @@ instance.interceptors.response.use(
         message: "您的登录已过期",
         type: "warning",
         duration: 1000,
+        offset: 85,
       });
+      return;
     } else if (data.code === 1002) {
       Message({
         message: "请您先登录",
         type: "warning",
         duration: 1000,
+        offset: 85,
       });
+      return;
     }
 
     return res;

@@ -10,5 +10,6 @@ export const updateLocalUserInfo = async (store, message, type = "success") => {
   Message({
     message: message,
     type: type, //默认值是success
+    offset: 85,
   });
 };

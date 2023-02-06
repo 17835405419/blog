@@ -23,7 +23,9 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="success" @click="changePwd">修改</el-button>
+        <el-button type="success" size="mini" @click="changePwd"
+          >修改</el-button
+        >
       </el-form-item>
     </el-form>
   </div>

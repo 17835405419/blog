@@ -6,13 +6,13 @@
     </div>
 
     <div class="header_nav-box">
-      <span @click="$router.push('/')">博客首页</span>
-      <span @click="$router.push('/technology')">技术博客</span>
-      <span @click="$router.push('/lifeLog')">生活日志</span>
-      <span>留言</span>
-      <span @click="$router.push('/about')">关于我</span>
+      <span @click="$router.replace('/')">博客首页</span>
+      <span @click="$router.replace('/technology')">技术博客</span>
+      <span @click="$router.replace('/lifeLog')">生活日志</span>
+      <span @click="$router.replace('/leaveMessage')">留言</span>
+      <span @click="$router.replace('/about')">关于我</span>
       <span>
-        <i class="el-icon-zoom-in"></i>
+        <i class="el-icon-zoom-in" @click="transmitSearch"></i>
       </span>
 
       <span @click="$router.push('/login')" v-if="!this.$store.state.token">
@@ -23,7 +23,19 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      isShowSearch: false,
+    };
+  },
+  methods: {
+    transmitSearch() {
+      this.isShowSearch = !this.isShowSearch;
+      this.$emit("isShowSearch", this.isShowSearch);
+    },
+  },
+};
 </script>
 <style lang="less" scoped>
 .header-box {
@@ -31,7 +43,7 @@ export default {};
   align-items: center;
   justify-content: space-between;
   background-color: @color-white;
-  // box-shadow: 1px 1px 5px 1px #eee;
+
   height: 35px;
 }
 // 左侧Logo区
@@ -44,7 +56,7 @@ export default {};
     height: 15px;
   }
   .header_title-name {
-    font-size: @fs-17;
+    font-size: @fs-16;
     color: @color-grey3;
     padding-left: 5px;
   }
@@ -55,7 +67,7 @@ export default {};
   justify-content: space-between;
   width: 45vw;
   padding-right: 50px;
-  font-size: @fs-17;
+  font-size: @fs-16;
   span {
     color: @color-grey2;
     &:hover {

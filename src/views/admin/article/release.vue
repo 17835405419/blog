@@ -194,6 +194,7 @@ export default Vue.extend({
       ? ((this.articleForm = JSON.parse(this.$route.query.articleInfo)),
         (this.articleId = JSON.parse(this.$route.query.articleInfo).articleId))
       : "";
+    row;
   },
   watch: {
     // 由于不同路由 使用同一个组件 不会重复渲染 及触发create等钩子函数 所以需要进行监听
@@ -319,40 +320,30 @@ export default Vue.extend({
 .el-form {
   padding: 30px 40px 0 40px;
 }
-// 上传封面按钮
-// .upload-cover {
-//   width: 100px;
-//   height: 100px;
-//   border: 1px dashed rgb(143, 139, 139);
-//   background-color: #fff;
-//   i {
-//     line-height: 100px;
-//   }
-// }
-
 // 标签盒子
 .tag-box {
-  width: 815px;
-  height: 36px;
-  background-color: #fff;
+  height: 20px;
+  background-color: @color-white;
   display: flex;
   align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
   .el-tag {
     margin-right: 5px;
   }
 }
+
 // 标签块
 .article-tag {
   display: inline-block;
-  width: 100px;
-  border: 1px solid #eee;
+  width: 10%;
+  height: 20px;
+  border: 1px solid @color-grey1;
   text-align: center;
-}
-.article-tag:hover {
-  box-shadow: 0 0 10px 5px #eee;
-  cursor: pointer;
-}
-.tag-box:hover {
-  cursor: pointer;
+  &:hover {
+    box-shadow: 0 0 10px 5px @color-grey1;
+    cursor: pointer;
+  }
 }
 </style>
